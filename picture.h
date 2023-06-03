@@ -13,13 +13,13 @@ class Picture {
     string certification;
     string director_name;
     int runtime; //runtime in minutes
-    long int viewers;
+    int viewers;
     float avgRating;
 public:
 
     // Parameterized constructor
     Picture(string picTitle, string picGenre, string country, string cert, string dir,
-        int picRuntime, long int picViewers, float rating) {
+        int picRuntime,  int picViewers, float rating) {
         title = picTitle;
         genre = picGenre;
         countryofOrigin = country;
@@ -67,7 +67,7 @@ public:
         runtime = r;
     }
 
-    void setViewers(long int v) {
+    void setViewers( int v) {
         viewers = v;
     }
 
@@ -100,7 +100,7 @@ public:
         return runtime;
     }
 
-    long int getViewers() const {
+    int getViewers() const {
         return viewers;
     }
 
@@ -114,16 +114,16 @@ public:
 
 class Film : public Picture {
     vector<string> actors;
-    long int boxOfficeRevenue;
-    long int budget;
+    int boxOfficeRevenue;
+    int budget;
     string state;
     int yearOfPremiere;
 public:
 
     // Parameterized constructor
     Film(string filmTitle, string filmGenre, string country, string cert, string dir,
-        vector<string>& actorList, int filmRuntime, long int filmViewers, float rating,
-        long int revenue, long int filmBudget, string filmState, int premiereYear) :
+        vector<string>& actorList, int filmRuntime,  int filmViewers, float rating,
+         int revenue,  int filmBudget, string filmState, int premiereYear) :
         Picture(filmTitle, filmGenre, country, cert, dir, filmRuntime, filmViewers, rating) {
         boxOfficeRevenue = revenue;
         budget = filmBudget;
@@ -144,7 +144,7 @@ public:
         boxOfficeRevenue = revenue;
     }
 
-    void setBudget(long int b) {
+    void setBudget( int b) {
         budget = b;
     }
 
@@ -164,7 +164,7 @@ public:
         return boxOfficeRevenue;
     }
 
-    long int getBudget() const {
+     int getBudget() const {
         return budget;
     }
 
@@ -206,7 +206,7 @@ public:
 
     // Parameterized constructor
     Episode(string episodeTitle, string episodeGenre, string country, string cert, string dir,
-        int episodeRuntime, long int episodeViewers, float rating,
+        int episodeRuntime,  int episodeViewers, float rating,
         int epSeason, int epEpisode) :
         Picture(episodeTitle, episodeGenre, country, cert, dir, episodeRuntime, episodeViewers, rating) {
         season = epSeason;
@@ -302,7 +302,7 @@ public:
         return series_name;
     }
 
-    string setSeries_name(const string& new_name) {
+    void setSeries_name(const string& new_name) {
         series_name = new_name;
     }
 
@@ -348,14 +348,13 @@ public:
     void setNoSeasons(int no_seasons) {
         this->no_seasons = no_seasons;
     }
-    void write(const Series& series, ostream& output) const{
-        output << series.getSeries_name() << ","
-            << series.getAvgViewers() << ","
-            << series.getAvgRuntime() << ","
-            << series.getNoSeasons() << "\n";
+    void write(ostream& output) const{
+     output << series_name << ","
+            << avg_viewers<< ","
+            << avg_runtime << ","
+            << no_seasons << "\n";
     }
     ~Series() {}
 };
-
 #endif // 
 

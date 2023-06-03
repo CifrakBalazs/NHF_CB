@@ -7,6 +7,7 @@ int series_menu(vector<Series>& seriesList) {
     int choice;
 
     while (true) {
+        cout << endl << endl << endl << endl << endl;
         cout << "Menu:\n";
         cout << "1. List all series\n";
         cout << "2. Add a new series\n";
@@ -17,7 +18,13 @@ int series_menu(vector<Series>& seriesList) {
         cout << "7. Update an episode of a series\n";
         cout << "8. Exit\n";
         cout << "Enter your choice: ";
-        cin >> choice;
+        while (!(cin >> choice)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please enter a valid choice: ";
+        }
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
 
         switch (choice) {
         case 1:
@@ -104,7 +111,7 @@ int series_menu(vector<Series>& seriesList) {
 }
 
 void displaySeries(const vector<Series>& seriesList) {
-    cout << "Series List:\n";
+    cout << "===== Series List =====\n";
     for (const Series& series : seriesList) {
         cout << "Series Name: " << series.getSeries_name() << endl;
         cout << "Actors: ";
@@ -115,7 +122,7 @@ void displaySeries(const vector<Series>& seriesList) {
         cout << "Average Viewers: " << series.getAvgViewers() << endl;
         cout << "Average Runtime: " << series.getAvgRuntime() << endl;
         cout << "No. of Seasons: " << series.getNoSeasons() << endl;
-        cout << endl;
+        cout << "=====================" << endl;
     }
 }
 
@@ -124,7 +131,6 @@ void addSeries(vector<Series>& seriesList) {
     vector<string> actors;
 
     cout << "Enter the series name: ";
-    cin.ignore();
     getline(cin, seriesName);
 
     cout << "Enter the actors (separated by commas): ";
@@ -157,7 +163,7 @@ void updateSeries(vector<Series>& seriesList) {
         string newSeriesName;
         cout << "Enter the new series name: ";
         getline(cin, newSeriesName);
-        series.getSeries_name() = newSeriesName;
+        series.setSeries_name(newSeriesName);
 
         vector<string> actors;
         cout << "Enter the new actors (separated by commas): ";
@@ -169,7 +175,7 @@ void updateSeries(vector<Series>& seriesList) {
         while (getline(ss, actor, ',')) {
             actors.push_back(actor);
         }
-        series.getActors() = actors;
+        series.setActors(actors);
     }
     else {
         cout << "Series not found!\n";
@@ -230,15 +236,40 @@ void addEpisode(Series& series) {
     cout << "Enter the director name: ";
     getline(cin, director_name);
     cout << "Enter the runtime (in minutes): ";
-    cin >> runtime;
+    while (!(cin >> runtime)) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Invalid input. Please enter a valid runtime: ";
+    }
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cout << "Enter the number of viewers: ";
-    cin >> viewers;
+    while (!(cin >> viewers)) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Invalid input. Please enter a valid number of viewers: ";
+    }
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cout << "Enter the average rating: ";
-    cin >> avgRating;
+    while (!(cin >> avgRating)) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Invalid input. Please enter a valid average rating: ";
+    }
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cout << "Enter the season number: ";
-    cin >> season;
+    while (!(cin >> season)) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Invalid input. Please enter a valid season number: ";
+    }
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cout << "Enter the episode number: ";
-    cin >> episode;
+    while (!(cin >> episode)) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Invalid input. Please enter a valid episode number: ";
+    }
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     series.getEpisodes().emplace_back(title, genre, countryofOrigin, certification,
         director_name, runtime, viewers, avgRating,
@@ -286,24 +317,50 @@ void updateEpisode(Series& series) {
         episode.setDirectorName(director_name);
 
         cout << "Enter the new runtime (in minutes): ";
-        cin >> runtime;
+        while (!(cin >> runtime)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please enter a valid runtime: ";
+        }
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         episode.setRuntime(runtime);
 
         cout << "Enter the new number of viewers: ";
-        cin >> viewers;
+        while (!(cin >> viewers)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please enter a valid number of viewers: ";
+        }
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         episode.setViewers(viewers);
 
         cout << "Enter the new average rating: ";
-        cin >> avgRating;
+        while (!(cin >> avgRating)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please enter a valid average rating: ";
+        }
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         episode.setAvgRating(avgRating);
 
         cout << "Enter the new season number: ";
-        cin >> season;
+        while (!(cin >> season)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please enter a valid season number: ";
+        }
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         episode.setSeason(season);
 
         cout << "Enter the new episode number: ";
-        cin >> episodeNumber;
+        while (!(cin >> episodeNumber)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please enter a valid episode number: ";
+        }
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         episode.setEpisode(episodeNumber);
+
 
         series.updateAverages();
     }

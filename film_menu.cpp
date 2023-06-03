@@ -1,10 +1,13 @@
 #include "film_menu.h"
 #include <iostream>
+#include <limits>
+#include <stdexcept>
 using namespace std;
 
 int film_menu(vector<Film>& films){
     int choice;
     while (true) {
+        cout << endl << endl << endl << endl << endl;
         cout << "----Films----" << endl;
         cout << "1.List Films " << endl;
         cout << "2.New Film" << endl;
@@ -12,7 +15,12 @@ int film_menu(vector<Film>& films){
         cout << "4.Delete a Film" << endl;
         cout << "5.Exit" << endl;
         cout << "Enter your choice: ";
-        cin >> choice;
+        while (!(cin >> choice)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please enter a valid choice: ";
+        }
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
         switch (choice) {
         case 1:
@@ -38,7 +46,6 @@ int film_menu(vector<Film>& films){
     return 0;
 }
 
-
 void film_update(vector<Film>& films) {
     if (films.empty()) {
         cout << "No films in the database." << endl;
@@ -56,7 +63,7 @@ void film_update(vector<Film>& films) {
             // Prompt the user to enter updated film details
             string newTitle, newGenre, newCountryOfOrigin, newCertification, newDirectorName, newState;
             int newRuntime, newYearOfPremiere;
-            long int newViewers, newBoxOfficeRevenue, newBudget;
+            int newViewers, newBoxOfficeRevenue, newBudget;
             float newAvgRating;
             vector<string> newActors;
 
@@ -76,15 +83,28 @@ void film_update(vector<Film>& films) {
             getline(cin, newDirectorName);
 
             cout << "Enter the new runtime of the Film (in minutes): ";
-            cin >> newRuntime;
+            while (!(cin >> newRuntime)) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Invalid input. Please enter a valid runtime: ";
+            }
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
             cout << "Enter the new number of viewers of the Film: ";
-            cin >> newViewers;
+            while (!(cin >> newViewers)) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Invalid input. Please enter a valid number of viewers: ";
+            }
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
             cout << "Enter the new average rating of the Film: ";
-            cin >> newAvgRating;
-
-            cin.ignore(); // Ignore the newline character left in the input stream
+            while (!(cin >> newAvgRating)) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Invalid input. Please enter a valid average rating: ";
+            }
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
             cout << "Enter the new actors of the Film (separated by commas): ";
             string actorList;
@@ -100,20 +120,32 @@ void film_update(vector<Film>& films) {
             newActors.push_back(actorList);
 
             cout << "Enter the new box office revenue of the Film: ";
-            cin >> newBoxOfficeRevenue;
+            while (!(cin >> newBoxOfficeRevenue)) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Invalid input. Please enter a valid box office revenue: ";
+            }
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
             cout << "Enter the new budget of the Film: ";
-            cin >> newBudget;
+            while (!(cin >> newBudget)) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Invalid input. Please enter a valid budget: ";
+            }
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-            cin.ignore(); // Ignore the newline character left in the input stream
 
             cout << "Enter the new state of the Film: ";
             getline(cin, newState);
 
             cout << "Enter the new year of premiere of the Film: ";
-            cin >> newYearOfPremiere;
-
-            cin.ignore(); // Ignore the newline character left in the input stream
+            while (!(cin >> newYearOfPremiere)) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Invalid input. Please enter a valid year of premiere: ";
+            }
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
             // Update the film object with the new details
             film.setTitle(newTitle);
@@ -163,13 +195,14 @@ void film_delete(vector<Film>& films) {
 }
 
 void new_film(vector<Film>& films) {
-    string title, genre, countryOfOrigin, certification, directorName, state;
+    string title, genre, countryOfOrigin, certification, directorName, state, actorList;
     int runtime, yearOfPremiere;
-    long int viewers, boxOfficeRevenue, budget;
+    int viewers, boxOfficeRevenue, budget;
     float avgRating;
     vector<string> actors;
 
     cout << "Enter the title of the Film: ";
+    cin.ignore();
     getline(cin, title);
 
     cout << "Enter the genre of the Film: ";
@@ -184,19 +217,31 @@ void new_film(vector<Film>& films) {
     cout << "Enter the director's name of the Film: ";
     getline(cin, directorName);
 
-    cout << "Enter the runtime of the Film (in minutes): ";
-    cin >> runtime;
+    cout << "Enter the runtime (in minutes).";
+    while (!(cin >> runtime)) {
+        cin.clear(); // clear the error state
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard the invalid input
+        cout << "Invalid input. Please enter an integer value for runtime: ";
+    }
+    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard the newline character
 
     cout << "Enter the number of viewers of the Film: ";
-    cin >> viewers;
+    while (!(cin >> viewers)) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Invalid input. Please enter an integer value for viewers: ";
+    }
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     cout << "Enter the average rating of the Film: ";
-    cin >> avgRating;
-
-    cin.ignore(); // Ignore the newline character left in the input stream
+    while (!(cin >> avgRating)) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Invalid input. Please enter a floating-point value for average rating: ";
+    }
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     cout << "Enter the actors of the Film (separated by commas): ";
-    string actorList;
     getline(cin, actorList);
 
     size_t pos = 0;
@@ -209,24 +254,35 @@ void new_film(vector<Film>& films) {
     actors.push_back(actorList);
 
     cout << "Enter the box office revenue of the Film: ";
-    cin >> boxOfficeRevenue;
+    while (!(cin >> boxOfficeRevenue)) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Invalid input. Please enter an integer value for box office revenue: ";
+    }
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     cout << "Enter the budget of the Film: ";
-    cin >> budget;
-
-    cin.ignore(); // Ignore the newline character left in the input stream
+    while (!(cin >> budget)) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Invalid input. Please enter an integer value for budget: ";
+    }
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     cout << "Enter the state of the Film: ";
     getline(cin, state);
-
+    
     cout << "Enter the year of premiere of the Film: ";
-    cin >> yearOfPremiere;
-
-    cin.ignore(); // Ignore the newline character left in the input stream
+    while (!(cin >> yearOfPremiere)) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Invalid input. Please enter an integer value for year of premiere: ";
+    }
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     // Create a new Film object and add it to the vector
-    Film newFilm(title, genre, countryOfOrigin, certification, directorName, actors,runtime, viewers,
-        avgRating,boxOfficeRevenue, budget, state, yearOfPremiere);
+    Film newFilm(title, genre, countryOfOrigin, certification, directorName, actors,
+        runtime, viewers, avgRating, boxOfficeRevenue, budget, state, yearOfPremiere);
     films.push_back(newFilm);
 
     cout << "Film added successfully!" << endl;

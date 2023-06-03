@@ -55,9 +55,9 @@ vector<Film> films_file_import(const string& filename) {
             // Convert string values to appropriate types
             int rtime = stoi(runtime);
             int yearOP = stoi(yearOfPremiere_str);
-            long int viewers = stol(viewers_str);
-            long int revenue = stol(revenue_str);
-            long int budget = stol(budget_str);
+            int viewers = stoi(viewers_str);
+            int revenue = stoi(revenue_str);
+            int budget = stoi(budget_str);
             float avg_rating = stof(avg_rating_str);
 
             string actors_file_name = title_str + addon;
@@ -165,19 +165,20 @@ void films_file_export(const vector<Film>& films, const string& filename) {
                 actors_write(film.getActors(), file2);
                 file2.close();
             }
-            file.close();
         }
+
     }
     else {
         throw "Failed to open the file.\n";
     }
+    file.close();
 }
 
 void series_file_export(const vector<Series>& seriess, const string& filename) {
     ofstream file(filename);
     if (file.is_open()) {
         for (const Series& series : seriess) {
-            series.write(series, file);
+            series.write(file);
             string filename2 = series.getSeries_name() + "_actors.csv";
             ofstream file2(filename2);
             if (file2.is_open()) {
@@ -185,7 +186,7 @@ void series_file_export(const vector<Series>& seriess, const string& filename) {
                 file2.close();
             }
             else {
-                throw "Failed to open file";
+                throw runtime_error("Failed to open actors file: " + filename2);
             }
             string filename3 = series.getSeries_name() + "_episodes.csv";
             ofstream file3(filename3);
@@ -194,14 +195,14 @@ void series_file_export(const vector<Series>& seriess, const string& filename) {
                 file3.close();
             }
             else {
-                throw "Failed to open file";
+                throw runtime_error("Failed to open episodes file: " + filename3);
             }
-            file.close();
         }
     }
     else {
-        throw "Failed to open file";
+        throw runtime_error("Failed to open main file: " + filename);
     }
+    file.close();
 }
 
 void episode_file_export(const vector<Episode>& episodes, const string& filename) {

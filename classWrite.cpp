@@ -47,6 +47,6 @@ void seriess_write(const vector<Series>& seriess,ostream& output) {
 
 void actors_write(const vector<string>& actors, ostream& output) {
     for (const string& actor : actors) {
-        output << actor;
+        output << actor<<endl;
     }
 }

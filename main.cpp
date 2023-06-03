@@ -15,12 +15,19 @@ int main() {
     vector<Series> series = series_file_import(series_fname);
     int choice;
     while (true) {
+        cout << endl << endl << endl << endl << endl;
         cout << "Welcome to the Database!" << std::endl;
         cout << "1. Films " << std::endl;
         cout << "2. Series" << std::endl;
         cout << "3. Exit" << std::endl;
         cout << "Enter your choice: ";
-        cin >> choice;
+        while (!(cin >> choice)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please enter a valid choice: ";
+        }
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
 
         switch (choice) {
         case 1:
