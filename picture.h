@@ -5,6 +5,7 @@
 #include <string>
 using namespace std;
 #include <iostream>
+#include <algorithm>
 
 class Picture {
     string title;
@@ -236,17 +237,17 @@ public:
         return episode;
 
     }
-    void write(const Episode& episode, ostream& output) const{
-        output << episode.getTitle() << ","
-            << episode.getGenre() << ","
-            << episode.getCountryOfOrigin() << ","
-            << episode.getCertification() << ","
-            << episode.getDirectorName() << ","
-            << episode.getRuntime() << ","
-            << episode.getViewers() << ","
-            << episode.getAvgRating() << ","
-            << episode.getEpisode() << ","
-            << episode.getSeason() << "\n";
+    void write(ostream& output) const{
+        output << getTitle() << ","
+            << getGenre() << ","
+            << getCountryOfOrigin() << ","
+            << getCertification() << ","
+            << getDirectorName() << ","
+            << getRuntime() << ","
+            << getViewers() << ","
+            << getAvgRating() << ","
+            << episode << ","
+            << season << "\n";
 
     }
     // Destructor
@@ -267,12 +268,12 @@ public:
             : series_name(series_name), actors(actors), avg_viewers(0),
               avg_runtime(0), no_seasons(0) {}
 
-    Series(string series_name, vector<Episode> episodes,vector<string> actors, float avg_viewers, float avg_runtime, int no_seasons)
-        : series_name(series_name), actors(actors), episodes(episodes),avg_viewers(avg_viewers),avg_runtime(avg_runtime),no_seasons(no_seasons){}
-    // Copy constructor
+    Series(string series_name, vector<Episode> episodes, vector<string> actors, float avg_viewers, float avg_runtime, int no_seasons)
+        : episodes(episodes), actors(actors), avg_viewers(avg_viewers), avg_runtime(avg_runtime), no_seasons(no_seasons)
+    {}
     Series(const Series& other)
-        : episodes(other.episodes), avg_viewers(other.avg_viewers), avg_runtime(other.avg_runtime),
-        no_seasons(other.no_seasons), actors(other.actors) {}
+        : episodes(other.episodes), actors(other.actors), avg_viewers(other.avg_viewers), avg_runtime(other.avg_runtime), no_seasons(other.no_seasons)
+    {}
 
     void updateAverages() {
         if (episodes.empty()) {
@@ -290,6 +291,14 @@ public:
 
             avg_viewers = static_cast<float>(totalViewers) / episodes.size();
             avg_runtime = static_cast<float>(totalRuntime) / episodes.size();
+            int maxSeasonNumber = 0;
+
+            for (const Episode& episode : episodes) {
+                if (episode.getSeason() > maxSeasonNumber) {
+                    maxSeasonNumber = episode.getSeason();
+                }
+            }
+            no_seasons = maxSeasonNumber;
         }
     }
     
@@ -320,7 +329,7 @@ public:
     void setAvgViewers(float avg_viewers) {
         this->avg_viewers = avg_viewers;
     }
-
+    
     void setActors(const vector<string>& a) {
         actors = a;
     }

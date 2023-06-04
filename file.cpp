@@ -102,6 +102,7 @@ vector <Series> series_file_import(const string& filename) {
             episode_vector = episode_file_import(series_name_str+addon);
             actor_vector = actors_file_import(series_name_str + addon_2);
             Series new_series(series_name_str,episode_vector,actor_vector,a_viewers,a_runtime,no_seasons);
+            new_series.updateAverages();
             series_vector.push_back(new_series);
         }
     }
@@ -165,11 +166,15 @@ void films_file_export(const vector<Film>& films, const string& filename) {
                 actors_write(film.getActors(), file2);
                 file2.close();
             }
+            else
+                throw runtime_error("Failed to open actors file: " + filename2);
+
         }
 
     }
     else {
-        throw "Failed to open the file.\n";
+        throw runtime_error("Failed to open the main file: " + filename);
+
     }
     file.close();
 }

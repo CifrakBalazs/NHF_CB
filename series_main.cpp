@@ -41,8 +41,8 @@ int series_menu(vector<Series>& seriesList) {
             break;
         case 5: {
             string seriesName;
-            cout << "Enter the name of the series: ";
             cin.ignore();
+            cout << "Enter the name of the series: ";
             getline(cin, seriesName);
 
             auto seriesIter = find_if(seriesList.begin(), seriesList.end(),
@@ -61,8 +61,8 @@ int series_menu(vector<Series>& seriesList) {
         }
         case 6: {
             string seriesName;
-            cout << "Enter the name of the series: ";
             cin.ignore();
+            cout << "Enter the name of the series: ";
             getline(cin, seriesName);
 
             auto seriesIter = find_if(seriesList.begin(), seriesList.end(),
@@ -82,8 +82,8 @@ int series_menu(vector<Series>& seriesList) {
         }
         case 7: {
             string seriesName;
-            cout << "Enter the name of the series: ";
             cin.ignore();
+            cout << "Enter the name of the series: ";
             getline(cin, seriesName);
 
             auto seriesIter = find_if(seriesList.begin(), seriesList.end(),
